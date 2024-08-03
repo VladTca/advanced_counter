@@ -18,6 +18,7 @@ function App() {
     const Reset = () => {
         setcifra(0)
         setStart(0)
+        setMax(10)
         setDisabled(false)
         localStorage.clear()
     }
@@ -32,6 +33,7 @@ function App() {
         if (Number(e.currentTarget.value) >= 0 && Number(e.currentTarget.value) < maxi) {
             setDisabled(false)
         }
+
 
         setStart(Number(e.currentTarget.value))
 
