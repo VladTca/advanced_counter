@@ -2,6 +2,7 @@ import './App.css'
 import {useState} from "react";
 import {Button} from "./Button";
 import {Tablo} from "./Tablo";
+import {Input} from "./Input";
 
 
 function App() {
@@ -9,7 +10,6 @@ function App() {
     const [maxi, setMax] = useState(10)
     const [start_value, setStart] = useState(0)
     const [dis, setDisabled] = useState(false)
-
 
 
     const Increment = () => {
@@ -61,27 +61,11 @@ function App() {
             <div className={'counter'}>
 
                 <div className={'settings'}>
-                    <div className={'input_data'}>
-                        <div>Max Value</div>
-                        <div>
-                            <input
-                                className={start_value < 0 || start_value >= maxi ? 'input_data_error' : ''}
-                                type="number"
-                                value={maxi}
-                                onChange={OnMaxHandler}/>
-                        </div>
-                    </div>
-                    <div className={'input_data'}>
-                        <div>Start Value</div>
-                        <div>
-                            <input
-                                className={start_value < 0 || start_value >= maxi ? 'input_data_error' : ''}
-                                type="number"
-                                value={start_value}
-                                onChange={OnStartHandler}/>
+                    <Input startValue={start_value} maxi={maxi} value={maxi} name={'Max Value'}
+                           onChange={OnMaxHandler}/>
+                    <Input startValue={start_value} maxi={maxi} name={'Start Value'} value={start_value}
+                           onChange={OnStartHandler}/>
 
-                        </div>
-                    </div>
                 </div>
 
                 <div className={'footer'}>
