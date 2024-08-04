@@ -1,29 +1,64 @@
 import './App.css'
-import {useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {Button} from "./Button";
 import {Tablo} from "./Tablo";
 import {Input} from "./Input";
 
 
 function App() {
-    const [cifra, setcifra] = useState(0)
+    const getInitialCifra = () => {
+        const savedCifra = localStorage.getItem('cifra');
+        const savedStart = localStorage.getItem('start_value');
+        return savedCifra ? Number(savedCifra) : Number(savedStart);
+    };
+
+    const [cifra, setCifra] = useState(getInitialCifra)
     const [maxi, setMax] = useState(10)
     const [start_value, setStart] = useState(0)
     const [dis, setDisabled] = useState(false)
 
+    const [isFirstRender, setIsFirstRender] = useState(true)
+
+    useEffect(() => {
+        if (isFirstRender) {
+        const max = localStorage.getItem('maxi')
+        const start = localStorage.getItem('start_value')
+        // const cifer = localStorage.getItem('cifra')
+        if (start && max) {
+            setStart(Number(start))
+
+            setMax(Number(max))
+            setDisabled(true)
+            // if (cifer !== null) {
+            //     setCifra(Number(cifer))
+            // } else {
+            //     setCifra(Number(start))
+            // }
+
+        }
+        }
+        setIsFirstRender(false)
+
+    }, [isFirstRender])
+
+    useEffect(() => {
+        localStorage.setItem('cifra', JSON.stringify(cifra))
+
+    }, [cifra])
+
 
     const Increment = () => {
-        setcifra(cifra + 1)
+        setCifra(cifra + 1)
     }
     const Reset = () => {
-        setcifra(0)
+        setCifra(0)
         setStart(0)
         setMax(10)
         setDisabled(false)
         localStorage.clear()
     }
 
-    const OnStartHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const OnStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (Number(e.currentTarget.value) < 0) {
             setDisabled(true)
         }
@@ -39,7 +74,7 @@ function App() {
 
     }
 
-    const OnMaxHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const OnMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (Number(e.currentTarget.value) <= start_value) {
             setDisabled(true)
         } else {
@@ -51,7 +86,7 @@ function App() {
 
 
     const SetStartValueHandler = () => {
-        setcifra(start_value)
+        setCifra(start_value)
         localStorage.setItem('maxi', JSON.stringify(maxi))
         localStorage.setItem('start_value', JSON.stringify(start_value))
         setDisabled(true)

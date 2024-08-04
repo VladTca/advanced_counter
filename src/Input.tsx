@@ -1,9 +1,11 @@
+import {ChangeEvent} from "react";
+
 type Props = {
     startValue: number,
     maxi: number,
     name: string
     value: number
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
 };
 
 
